@@ -1,4 +1,4 @@
 /*
 !.gitignore
-!*/hw*.py
-!*/lab*.py
+!hw*py
+!lab*py
