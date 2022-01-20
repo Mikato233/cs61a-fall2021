@@ -1,16 +1,19 @@
 {
-    "name": "Lab 0",
-    "endpoint": "cal/cs61a/fa21/lab00",
+    "name": "Lab 2",
+    "endpoint": "cal/cs61a/fa21/lab02",
     "src": [
-        "lab00.py"
+        "lab02.py"
     ],
     "tests": {
         "lab*.py": "doctest",
         "tests/*.py": "ok_test"
     },
     "default_tests": [
-        "twenty_twenty_one",
-        "python-basics"
+        "lambda",
+        "hof-wwpd",
+        "lambda_curry2",
+        "lambda_curry2_syntax_check",
+        "count_cond"
     ],
     "protocols": [
         "restore",

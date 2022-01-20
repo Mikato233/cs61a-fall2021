@@ -1,16 +1,19 @@
 {
-    "name": "Lab 0",
-    "endpoint": "cal/cs61a/fa21/lab00",
+    "name": "Lab 1",
+    "endpoint": "cal/cs61a/fa21/lab01",
     "src": [
-        "lab00.py"
+        "lab01.py"
     ],
     "tests": {
         "lab*.py": "doctest",
         "tests/*.py": "ok_test"
     },
     "default_tests": [
-        "twenty_twenty_one",
-        "python-basics"
+        "control",
+        "short-circuit",
+        "debugging-quiz",
+        "falling",
+        "sum_digits"
     ],
     "protocols": [
         "restore",
