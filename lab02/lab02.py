@@ -56,7 +56,15 @@ def count_cond(condition):
     8
     """
     "*** YOUR CODE HERE ***"
-
+    def count_wow(n):
+        i = 1
+        count = 0
+        while i <= n:
+            if condition(n, i):
+                count += 1
+            i += 1
+        return count
+    return count_wow
 
 def composer(f, g):
     """Return the composition function which given x, computes f(g(x)).
@@ -91,7 +99,7 @@ def composite_identity(f, g):
     False
     """
     "*** YOUR CODE HERE ***"
-
+    return lambda t: composer(f, g)(t) == composer(g ,f)(t)
 
 def cycle(f1, f2, f3):
     """Returns a function that is itself a higher-order function.
@@ -120,3 +128,17 @@ def cycle(f1, f2, f3):
     19
     """
     "*** YOUR CODE HERE ***"
+
+    def make_cycle_func(n):
+        def do_cycles(x):
+            cycle_times = n // 3
+            do_times = n % 3
+            for i in range(cycle_times):
+                x = f3(f2(f1(x)))               #do a cycle
+            if do_times > 0:
+                x = f1(x)
+            if do_times > 1:
+                x = f2(x)
+            return x
+        return do_cycles
+    return make_cycle_func
