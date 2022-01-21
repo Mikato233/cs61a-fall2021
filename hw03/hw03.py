@@ -23,12 +23,9 @@ def num_eights(pos):
     True
     """
     "*** YOUR CODE HERE ***"
-    if pos == 8:
-        return 1
-    elif pos < 10:
+    if pos == 0:
         return 0
-    else:
-        return num_eights(pos % 10) + num_eights(pos // 10)
+    return (pos%10 == 8) + num_eights(pos // 10)
 
 def pingpong(n):
     """Return the nth element of the ping-pong sequence.
