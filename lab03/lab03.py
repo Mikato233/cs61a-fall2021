@@ -26,7 +26,7 @@ def unique_digits(n):
     2
     """
     "*** YOUR CODE HERE ***"
-
+    return len([k for k in range(10) if has_digit(n, k)])
 
 def has_digit(n, k):
     """Returns whether K is a digit in N.
@@ -36,7 +36,7 @@ def has_digit(n, k):
     False
     """
     "*** YOUR CODE HERE ***"
-
+    return str(k) in str(n)
 
 def ordered_digits(x):
     """Return True if the (base 10) digits of X>0 are in non-decreasing
@@ -58,7 +58,14 @@ def ordered_digits(x):
 
     """
     "*** YOUR CODE HERE ***"
-
+    pre = 10
+    while x:
+        
+        if x % 10 > pre:
+            return False
+        pre = x % 10
+        x //= 10
+    return True
 
 def get_k_run_starter(n, k):
     """
@@ -81,12 +88,12 @@ def get_k_run_starter(n, k):
     """
     i = 0
     final = None
-    while ____________________________:
-        while ____________________________:
-            ____________________________
-        final = ____________________________
-        i = ____________________________
-        n = ____________________________
+    while i <= k:
+        while n >= 10 and (n//10)%10 < n%10:
+            n = n // 10 
+        final = n % 10
+        i = i + 1 
+        n = n // 10
     return final
 
 
@@ -106,7 +113,12 @@ def make_repeater(func, n):
     5
     """
     "*** YOUR CODE HERE ***"
-
+    if n == 0:
+        return lambda x: x
+    tfunc = func
+    for i in range(n-1):
+        tfunc = composer(func, tfunc)
+    return tfunc
 
 def composer(func1, func2):
     """Return a function f, such that f(x) = func1(func2(x))."""
@@ -124,7 +136,7 @@ def apply_twice(func):
     16
     """
     "*** YOUR CODE HERE ***"
-
+    return make_repeater(func, 2)
 
 def protected_secret(password, secret, num_attempts):
     """
@@ -146,4 +158,13 @@ def protected_secret(password, secret, num_attempts):
     """
     def get_secret(password_attempt):
         "*** YOUR CODE HERE ***"
+        d = 0
+        if num_attempts == 0:
+            print("SECRET LOCKED")
+        elif password_attempt == password:
+            print(secret)
+        else:
+            print("INCORRECT PASSWORD")
+            d = 1
+        return protected_secret(password, secret, num_attempts-d)
     return get_secret
