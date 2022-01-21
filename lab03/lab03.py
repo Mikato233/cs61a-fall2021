@@ -60,7 +60,6 @@ def ordered_digits(x):
     "*** YOUR CODE HERE ***"
     pre = 10
     while x:
-        
         if x % 10 > pre:
             return False
         pre = x % 10
