@@ -21,7 +21,6 @@ def roll_dice(num_rolls, dice=six_sided):
     assert type(num_rolls) == int, 'num_rolls must be an integer.'
     assert num_rolls > 0, 'Must roll at least once.'
     # BEGIN PROBLEM 1
-    "*** YOUR CODE HERE ***"
     dices = []
     for _ in range(num_rolls):
         dices.append(dice())
@@ -35,7 +34,6 @@ def picky_piggy(score):
     score:  The opponent's current score.
     """
     # BEGIN PROBLEM 2
-    # "*** YOUR CODE HERE ***"
     assert score >= 0
     pig = 142857
     pos_in_pig = score % 6
@@ -62,7 +60,6 @@ def take_turn(num_rolls, opponent_score, dice=six_sided, goal=GOAL_SCORE):
     assert num_rolls <= 10, 'Cannot roll more than 10 dice.'
     assert opponent_score < goal, 'The game should be over.'
     # BEGIN PROBLEM 3
-    "*** YOUR CODE HERE ***"
     if num_rolls == 0:
         return picky_piggy(opponent_score)
     return roll_dice(num_rolls, dice)
@@ -76,7 +73,6 @@ def hog_pile(player_score, opponent_score):
     opponent_score: The total score of the other player.
     """
     # BEGIN PROBLEM 4
-    "*** YOUR CODE HERE ***"
     return player_score if player_score == opponent_score else 0
     # END PROBLEM 4
 
@@ -116,7 +112,6 @@ def play(strategy0, strategy1, score0=0, score1=0, dice=six_sided,
     """
     who = 0  # Who is about to take a turn, 0 (first) or 1 (second)
     # BEGIN PROBLEM 5
-    "*** YOUR CODE HERE ***"
     while score0 < goal and score1 < goal:
         if who == 0:
             score0 += take_turn(strategy0(score0, score1), score1, dice, goal)
@@ -203,7 +198,6 @@ def announce_highest(who, last_score=0, running_high=0):
     """
     assert who == 0 or who == 1, 'The who argument should indicate a player.'
     # BEGIN PROBLEM 7
-    "*** YOUR CODE HERE ***"
     def say(score0, score1):
         new_high = running_high
         score = score0 if who == 0 else score1
@@ -253,7 +247,12 @@ def make_averaged(original_function, trials_count=1000):
     3.0
     """
     # BEGIN PROBLEM 8
-    "*** YOUR CODE HERE ***"
+    def rep_func(*args):
+        func_sum = 0
+        for _ in range(trials_count):
+            func_sum += original_function(*args)
+        return func_sum / trials_count
+    return rep_func
     # END PROBLEM 8
 
 
@@ -267,7 +266,13 @@ def max_scoring_num_rolls(dice=six_sided, trials_count=1000):
     1
     """
     # BEGIN PROBLEM 9
-    "*** YOUR CODE HERE ***"
+    max_aver, dice_num = 0, 0
+    averaged_roll = make_averaged(roll_dice, trials_count)
+    for i in range(1, 11):
+        this_aver = averaged_roll(i, dice)
+        if this_aver > max_aver:
+            max_aver, dice_num = this_aver, i
+    return dice_num
     # END PROBLEM 9
 
 
@@ -296,10 +301,10 @@ def run_experiments():
     print('Max scoring num rolls for six-sided dice:', six_sided_max)
     print('always_roll(6) win rate:', average_win_rate(always_roll(6)))
 
-    #print('always_roll(8) win rate:', average_win_rate(always_roll(8)))
-    #print('picky_piggy_strategy win rate:', average_win_rate(picky_piggy_strategy))
+    print('always_roll(8) win rate:', average_win_rate(always_roll(8)))
+    print('picky_piggy_strategy win rate:', average_win_rate(picky_piggy_strategy))
     print('hog_pile_strategy win rate:', average_win_rate(hog_pile_strategy))
-    #print('final_strategy win rate:', average_win_rate(final_strategy))
+    print('final_strategy win rate:', average_win_rate(final_strategy))
     "*** You may add additional experiments as you wish ***"
 
 
@@ -308,7 +313,7 @@ def picky_piggy_strategy(score, opponent_score, cutoff=8, num_rolls=6):
     returns NUM_ROLLS otherwise.
     """
     # BEGIN PROBLEM 10
-    return 6  # Remove this line once implemented.
+    return 0 if picky_piggy(opponent_score) >= cutoff else num_rolls
     # END PROBLEM 10
 
 
@@ -318,17 +323,21 @@ def hog_pile_strategy(score, opponent_score, cutoff=8, num_rolls=6):
     Otherwise, it returns NUM_ROLLS.
     """
     # BEGIN PROBLEM 11
-    return 6  # Remove this line once implemented.
+    piggy_score = picky_piggy(opponent_score)
+    if hog_pile(score + piggy_score, opponent_score) or piggy_score >= cutoff:
+        return 0
+    else:
+        return num_rolls
     # END PROBLEM 11
 
 
 def final_strategy(score, opponent_score):
-    """Write a brief description of your final strategy.
-
-    *** YOUR DESCRIPTION HERE ***
-    """
+    """摆烂"""
     # BEGIN PROBLEM 12
-    return 6  # Remove this line once implemented.
+    if score > GOAL_SCORE - 5:
+        return 1
+    else:
+        return 6
     # END PROBLEM 12
 
 ##########################
