@@ -244,12 +244,7 @@ def preorder(t):
     [2, 4, 6]
     """
     "*** YOUR CODE HERE ***"
-    if is_leaf(t):
-        return t
-    ret_list = [label(t)]
-    for b in branches(t):
-        ret_list += preorder(b)
-    return ret_list
+    return [label(t)] + sum([preorder(b) for b in branches(t)], [])
 
 def str_interval(x):
     """Return a string representation of interval x."""
